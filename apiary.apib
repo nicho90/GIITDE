@@ -1,0 +1,65 @@
+FORMAT: 1A
+HOST: http://polls.apiblueprint.org/
+
+# Smart Trash Bins
+
+
+
+## Trash Bins [/trashbins]
+
+### List All Trash Bins [GET]
+
++ Response 200 (application/json)
+
+        [
+            {
+                "trash_bin_id": 1,
+                "lat": 0.0,
+                "lng": 0.0
+            }, {
+                "trash_bin_id": 2,
+                "lat": 0.0,
+                "lng": 0.0
+            }, {
+                "trash_bin_id": 3,
+                "lat": 0.0,
+                "lng": 0.0
+            }
+        ]
+
+### Create a New Trash Bin [POST]
+
++ Request (application/json)
+
+        {
+            "lat": 0.0,
+            "lng": 0.0
+        }
+
++ Response 201 (application/json)
+
+    + Headers
+
+            Location: /questions/2
+
+    + Body
+
+            {
+                "question": "Favourite programming language?",
+                "published_at": "2015-08-05T08:40:51.620Z",
+                "choices": [
+                    {
+                        "choice": "Swift",
+                        "votes": 0
+                    }, {
+                        "choice": "Python",
+                        "votes": 0
+                    }, {
+                        "choice": "Objective-C",
+                        "votes": 0
+                    }, {
+                        "choice": "Ruby",
+                        "votes": 0
+                    }
+                ]
+            }
