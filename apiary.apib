@@ -5,31 +5,51 @@ HOST: http://polls.apiblueprint.org/
 
 
 
-## Trash Bins [/trash_bins]
+## Trash Bins [/trash_bins{?lat,lng}]
 
 ### List All Trash Bins [GET]
+
++ Parameters
+    
+    + lat: `0.0` (optional) - Latitude value of the User
+    + lng: `0.0` (optional) - Longitude value of the User
 
 + Response 200 (application/json)
 
         [
             {
                 "trash_bin_id": 1,
+                "description": "GEO1",
                 "filling_height": 10,
+                "filling_height_unit": "CENTIMETER",
+                "capacity": 50,
+                "capacity_unit": "LITER"
                 "distance": 500,
-                "lat": 0.0,
-                "lng": 0.0
+                "distance_unit": "METER",
+                "lat": 51.969148,
+                "lng": 7.595934
             }, {
                 "trash_bin_id": 2,
-                "filling_height": 20,
-                "distance": 600,
-                "lat": 0.0,
-                "lng": 0.0
+                "description": "Bushaltestelle",
+                "filling_height": 50,
+                "filling_height_unit": "CENTIMETER",
+                "capacity": 50,
+                "capacity_unit": "LITER"
+                "distance": 750,
+                "distance_unit": "METER",
+                "lat": 51.969357,
+                "lng": 7.596760
             }, {
                 "trash_bin_id": 3,
-                "filling_height": 30,
-                "distance": 700,
-                "lat": 0.0,
-                "lng": 0.0
+                "description": "Correnstraße",
+                "filling_height": 20,
+                "filling_height_unit": "CENTIMETER",
+                "capacity": 50,
+                "capacity_unit": "LITER"
+                "distance": 800,
+                "distance_unit": "METER",
+                "lat": 51.971076, 
+                "lng": 7.596855
             }
         ]
 
