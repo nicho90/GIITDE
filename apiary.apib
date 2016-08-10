@@ -5,7 +5,7 @@ HOST: http://polls.apiblueprint.org/
 
 
 
-## Trash Bins [/trashbins]
+## Trash Bins [/trash_bins]
 
 ### List All Trash Bins [GET]
 
@@ -14,14 +14,20 @@ HOST: http://polls.apiblueprint.org/
         [
             {
                 "trash_bin_id": 1,
+                "filling_height": 10,
+                "distance": 500,
                 "lat": 0.0,
                 "lng": 0.0
             }, {
                 "trash_bin_id": 2,
+                "filling_height": 20,
+                "distance": 600,
                 "lat": 0.0,
                 "lng": 0.0
             }, {
                 "trash_bin_id": 3,
+                "filling_height": 30,
+                "distance": 700,
                 "lat": 0.0,
                 "lng": 0.0
             }
@@ -43,6 +49,23 @@ HOST: http://polls.apiblueprint.org/
             Location: /questions/2
 
     + Body
+
+            {
+                "trash_bin_id": 1,
+                "lat": 0.0,
+                "lng": 0.0
+            }
+            
+            
+## Trash Bins [/trash_bins/{trash_bin_id}]
+
+### List All Trash Bins [GET]
+
++ Parameters
+
+    trash_bin_id: 
+
++ Response 200 (application/json)
 
             {
                 "trash_bin_id": 1,
