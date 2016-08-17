@@ -3,6 +3,7 @@ HOST: giv-project7.uni-muenster.de:5000/api
 
 # Smart Trash Bins
 
+
 ##### HOST
 `http://giv-project7.uni-muenster.de:5000/api`
 
@@ -16,6 +17,8 @@ HOST: giv-project7.uni-muenster.de:5000/api
 | `404` | Not found |
 | `500` | Internal Server Error |
 | `501` | Not implemented |
+
+
 
 # Data Structures
 
@@ -31,9 +34,26 @@ HOST: giv-project7.uni-muenster.de:5000/api
 + measured_distance: `10` (number, required) - Distance `>= 0` in Centimeter, measured from the ultra sonic sensor to the ground, which decreases, when rubbish is inside
 + measured_filling_height `50` (number, required) - Distance `>= 0` in Centimeter, calculated by the filling height of the trash bin and the measured distance from the ultra sonic sensor: `filling_height - measured_distance`
 
+
+
+
 ## Trash Bin ::Arrays [/trash_bins{?lat,lng,latest_measurement}]
 
+
 ### List All Trash Bins [GET]
+
+a) Without the parameter `?lng=51.969037&lat=7.603001`, the following attributes are not contained in the response
+
+* `distance` 
+* `distance_unit`
+
+b) Without the parameter `?latest_measurement=true`, the following attributes are not contained in the response
+
+* `timestamp` 
+* `measured_distance` 
+* `measured_distance_unit` 
+* `measured_filling_height`
+* `measured_filling_height_unit`
 
 + Parameters
     + lat: `51.969037` (optional) - Latitude value of the User
@@ -141,8 +161,6 @@ Without the parameter `?latest_measurement=true`, the following attributes are n
 * `measured_distance_unit` 
 * `measured_filling_height`
 * `measured_filling_height_unit`
-
-<br>
 
 
 + Parameters
