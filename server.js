@@ -31,11 +31,11 @@ if (mode.toLowerCase() === "api") {
 
     // Load dependencies
     var trash_bins = require('./routes/trash_bins');
-    //var measurements = require('./routes/measurements');
+    var measurements = require('./routes/measurements');
 
     // Load Routes
     app.use('/api', trash_bins);
-    //app.use('/api', measurements);
+    app.use('/api', measurements);
 
 } else {
     console.log(colors.blue("Mode: Simple webserver"));
