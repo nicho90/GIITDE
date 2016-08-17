@@ -23,6 +23,18 @@ INSERT INTO Measurements(trash_bin_id, measured_distance, measured_filling_heigh
     20,
     40
 ), (
+    1,
+    30,
+    50
+), (
+    1,
+    40,
+    20
+), (
+    1,
+    50,
+    10
+), (
     2,
     40,
     20
