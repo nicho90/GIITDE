@@ -6,7 +6,7 @@ var _ = require('underscore');
 var database_url = require('../../server.js').database_url;
 
 
-// GET
+// DELETE
 exports.request = function(req, res) {
 
     // Connect to database
