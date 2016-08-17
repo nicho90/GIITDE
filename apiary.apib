@@ -3,9 +3,35 @@ HOST: giv-project7.uni-muenster.de:5000/api
 
 # Smart Trash Bins
 
-**Host**: `giv-project7.uni-muenster.de:5000/api`
+##### HOST
+`http://giv-project7.uni-muenster.de:5000/api`
 
-## Trash Bins [/trash_bins{?lat,lng,latest_measurement}]
+##### Status-Codes
+
+| Code | Meaning |
+|------|---------|
+| `200` | Request successful |
+| `201` | Created |
+| `204` | No Content |
+| `404` | Not found |
+| `500` | Internal Server Error |
+| `501` | Not implemented |
+
+# Data Structures
+
+## Trash Bin (object)
++ description: `Eingang des GEO1` (string, required) - Description of the location
++ filling_height: `60` (number, required) - Filling height of the trash bin, which is the height in Centimeter between the bottom and the ultra sonic sensor.
++ capacity: `60` (number, required) - Capacity in Liter of the trash bin
++ lng: `51.969148` (number, required) - Longitude value
++ lat: `7.595934` (number, required) - Latitude value
+
+## Measurement (object)
++ trash_bin_id: `1` (number, required) - Id of a trash bin
++ measured_distance: `20` (number, required) - Distance in Centimeter, measured from the ultra sonic sensor to the ground, which decreases, when rubbish is inside
++ measured_filling_height `40` (number, required) - Distance in Centimeter, calculated by the filling height of the trash bin and the measured distance from the ultra sonic sensor: `filling_height - measured_distance`
+
+## Trash Bin ::Arrays [/trash_bins{?lat,lng,latest_measurement}]
 
 ### List All Trash Bins [GET]
 
@@ -104,11 +130,19 @@ HOST: giv-project7.uni-muenster.de:5000/api
             }
             
             
-## Trash Bins [/trash_bins/{trash_bin_id}{?latest_measurement}]
+## Trash Bin ::Object [/trash_bins/{trash_bin_id}{?latest_measurement}]
 
 ### Retrieve a Trash Bin [GET]
 
-If the query-parameter `?latest_measurement=true` is not sent, the attributes `timestamp`, `measured\_distance`, `measured_distance_unit`, `measured\_filling\_height`, `measured_filling\_height\_unit` will not be delivered.
+Without the parameter `?latest_measurement=true`, the following attributes are not contained in the response
+
+* `timestamp` 
+* `measured_distance` 
+* `measured_distance_unit` 
+* `measured_filling_height`
+* `measured_filling_height_unit`
+
+<br>
 
 
 + Parameters
