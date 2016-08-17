@@ -21,15 +21,15 @@ HOST: giv-project7.uni-muenster.de:5000/api
 
 ## Trash Bin (object)
 + description: `Eingang des GEO1` (string, required) - Description of the location
-+ filling_height: `60` (number, required) - Filling height of the trash bin, which is the height in Centimeter between the bottom and the ultra sonic sensor.
-+ capacity: `60` (number, required) - Capacity in Liter of the trash bin
++ filling_height: `60` (number, required) - Filling height `>= 0` of the trash bin, which is the height in Centimeter between the bottom and the ultra sonic sensor.
++ capacity: `60` (number, required) - Capacity `>= 0` in Liter of the trash bin
 + lng: `51.969148` (number, required) - Longitude value
 + lat: `7.595934` (number, required) - Latitude value
 
 ## Measurement (object)
 + trash_bin_id: `1` (number, required) - Id of a trash bin
-+ measured_distance: `20` (number, required) - Distance in Centimeter, measured from the ultra sonic sensor to the ground, which decreases, when rubbish is inside
-+ measured_filling_height `40` (number, required) - Distance in Centimeter, calculated by the filling height of the trash bin and the measured distance from the ultra sonic sensor: `filling_height - measured_distance`
++ measured_distance: `10` (number, required) - Distance `>= 0` in Centimeter, measured from the ultra sonic sensor to the ground, which decreases, when rubbish is inside
++ measured_filling_height `50` (number, required) - Distance `>= 0` in Centimeter, calculated by the filling height of the trash bin and the measured distance from the ultra sonic sensor: `filling_height - measured_distance`
 
 ## Trash Bin ::Arrays [/trash_bins{?lat,lng,latest_measurement}]
 
@@ -100,7 +100,7 @@ HOST: giv-project7.uni-muenster.de:5000/api
             }
         ]
 
-### Create a New Trash Bin [POST]
+### Create a new Trash Bin [POST]
 
 + Request (application/json)
 
@@ -177,6 +177,10 @@ Without the parameter `?latest_measurement=true`, the following attributes are n
 + Parameters
 
     + trash\_bin\_id: `1` (required) - Id of a trash bin
+
++ Request
+
+    + Attributes (Trash Bin)
     
 + Response 200 (application/json)
 
@@ -201,6 +205,82 @@ Without the parameter `?latest_measurement=true`, the following attributes are n
             }
 
 ### Delete a Trash Bin [DELETE]
+
++ Parameters
+
+    + trash\_bin\_id: `1` (required) - Id of a trash bin
+    
++ Response 204
+
+
+
+## Measurements ::Array [/trash_bins/{trash_bin_id}/measurements]
+
+### List all Measurements of a Trash Bin [GET]
+
++ Parameters
+
+    + trash\_bin\_id: `1` (required) - Id of a trash bin
+    
++ Response 200 (application/json)
+
+        [
+                {
+                    "measurement_id": 1,
+                    "timestamp": "2016-08-17T12:51:56.352Z",
+                    "measured_distance": 20,
+                    "measured_distance_unit": "CENTIMETER",
+                    "measured_filling_height": 40,
+                    "measured_filling_height_unit": "CENTIMETER"
+                }, {
+                    "measurement_id": 2,
+                    "timestamp": "2016-08-17T12:51:56.352Z",
+                    "measured_distance": 30,
+                    "measured_distance_unit": "CENTIMETER",
+                    "measured_filling_height": 50,
+                    "measured_filling_height_unit": "CENTIMETER"
+                }, {
+                    "measurement_id": 3,
+                    "timestamp": "2016-08-17T12:51:56.352Z",
+                    "measured_distance": 40,
+                    "measured_distance_unit": "CENTIMETER",
+                    "measured_filling_height": 20,
+                    "measured_filling_height_unit": "CENTIMETER"
+                }, {
+                    "measurement_id": 4,
+                    "timestamp": "2016-08-17T12:51:56.352Z",
+                    "measured_distance": 50,
+                    "measured_distance_unit": "CENTIMETER",
+                    "measured_filling_height": 10,
+                    "measured_filling_height_unit": "CENTIMETER"
+                }
+            ]
+
+
+### Create a new Measurement for a Trash Bin [POST]
+
++ Parameters
+
+    + trash\_bin\_id: `1` (required) - Id of a trash bin
+
++ Request
+
+    + Attributes (Measurement)
+
++ Response 200 (application/json)
+
+    + Body
+            
+            {
+                "measurement_id": 5,
+                "timestamp": "2016-08-17T12:51:56.352Z",
+                "measured_distance": 10,
+                "measured_distance_unit": "CENTIMETER",
+                "measured_filling_height": 50,
+                "measured_filling_height_unit": "CENTIMETER"
+            }
+
+### Delete all Measurements of a Trash Bin [DELETE]
 
 + Parameters
 
