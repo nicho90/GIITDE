@@ -1,55 +1,76 @@
 FORMAT: 1A
-HOST: http://polls.apiblueprint.org/
+HOST: giv-project7.uni-muenster.de:5000/api
 
 # Smart Trash Bins
 
+**Host**: `giv-project7.uni-muenster.de:5000/api`
 
-
-## Trash Bins [/trash_bins{?lat,lng}]
+## Trash Bins [/trash_bins{?lat,lng,latest_measurement}]
 
 ### List All Trash Bins [GET]
 
 + Parameters
+    + lat: `51.969037` (optional) - Latitude value of the User
+    + lng: `7.603001` (optional) - Longitude value of the User
+    + latest_measurement: `true` (optional) - Latest measurement of a trash bin
     
-    + lat: `0.0` (optional) - Latitude value of the User
-    + lng: `0.0` (optional) - Longitude value of the User
-
 + Response 200 (application/json)
 
         [
             {
-                "trash_bin_id": 1,
-                "description": "GEO1",
-                "filling_height": 10,
-                "filling_height_unit": "CENTIMETER",
-                "capacity": 50,
-                "capacity_unit": "LITER"
-                "distance": 500,
-                "distance_unit": "METER",
-                "lat": 51.969148,
-                "lng": 7.595934
-            }, {
                 "trash_bin_id": 2,
+                "created": "2016-08-17T12:51:56.352Z",
+                "updated": "2016-08-17T12:51:56.352Z",
                 "description": "Bushaltestelle",
-                "filling_height": 50,
+                "filling_height": 60,
                 "filling_height_unit": "CENTIMETER",
-                "capacity": 50,
-                "capacity_unit": "LITER"
-                "distance": 750,
-                "distance_unit": "METER",
+                "capacity": 60,
+                "capacity_unit": "LITER",
+                "lng": 7.59676,
                 "lat": 51.969357,
-                "lng": 7.596760
+                "distance": 430.38893844,
+                "distance_unit": "METER",
+                "timestamp": "2016-08-17T12:51:56.352Z",
+                "measured_distance": 40,
+                "measured_distance_unit": "CENTIMETER",
+                "measured_filling_height": 20,
+                "measured_filling_height_unit": "CENTIMETER"
             }, {
                 "trash_bin_id": 3,
+                "created": "2016-08-17T12:51:56.352Z",
+                "updated": "2016-08-17T12:51:56.352Z",
                 "description": "Correnstraße",
-                "filling_height": 20,
+                "filling_height": 60,
                 "filling_height_unit": "CENTIMETER",
-                "capacity": 50,
-                "capacity_unit": "LITER"
-                "distance": 800,
+                "capacity": 60,
+                "capacity_unit": "LITER",
+                "lng": 7.596855,
+                "lat": 51.971076,
+                "distance": 479.45112773,
                 "distance_unit": "METER",
-                "lat": 51.971076, 
-                "lng": 7.596855
+                "timestamp": "2016-08-17T12:51:56.352Z",
+                "measured_distance": 60,
+                "measured_distance_unit": "CENTIMETER",
+                "measured_filling_height": 0,
+                "measured_filling_height_unit": "CENTIMETER"
+            }, {
+                "trash_bin_id": 1,
+                "created": "2016-08-17T12:51:56.352Z",
+                "updated": "2016-08-17T12:51:56.352Z",
+                "description": "GEO1",
+                "filling_height": 60,
+                "filling_height_unit": "CENTIMETER",
+                "capacity": 60,
+                "capacity_unit": "LITER",
+                "lng": 7.595934,
+                "lat": 51.969148,
+                "distance": 485.83873096,
+                "distance_unit": "METER",
+                "timestamp": "2016-08-17T12:51:56.352Z",
+                "measured_distance": 20,
+                "measured_distance_unit": "CENTIMETER",
+                "measured_filling_height": 40,
+                "measured_filling_height_unit": "CENTIMETER"
             }
         ]
 
@@ -58,37 +79,97 @@ HOST: http://polls.apiblueprint.org/
 + Request (application/json)
 
         {
-            "lat": 0.0,
-            "lng": 0.0
+            "description": "Eingang Fachhochschule",
+            "filling_height": 60,
+            "capacity": 60,
+            "lng": 7.595624,
+            "lat": 51.968526
         }
 
 + Response 201 (application/json)
 
-    + Headers
-
-            Location: /questions/2
-
     + Body
 
             {
-                "trash_bin_id": 1,
-                "lat": 0.0,
-                "lng": 0.0
+                "trash_bin_id": 4,
+                "created": "2016-08-17T12:51:56.352Z",
+                "updated": "2016-08-17T12:51:56.352Z",
+                "description": "Eingang Fachhochschule",
+                "filling_height": 60,
+                "filling_height_unit": "CENTIMETER",
+                "capacity": 60,
+                "capacity_unit": "LITER",
+                "lng": 7.595624,
+                "lat": 51.968526
             }
             
             
-## Trash Bins [/trash_bins/{trash_bin_id}]
+## Trash Bins [/trash_bins/{trash_bin_id}{?latest_measurement}]
 
-### List All Trash Bins [GET]
+### Retrieve a Trash Bin [GET]
+
+If the query-parameter `?latest_measurement=true` is not sent, the attributes `timestamp`, `measured\_distance`, `measured_distance_unit`, `measured\_filling\_height`, `measured_filling\_height\_unit` will not be delivered.
+
 
 + Parameters
 
-    trash_bin_id: 
+    + trash\_bin\_id: `1` (required) - Id of a trash bin
+    + latest\_measurement: `true` (optional) - Latest measurement of a trash bin
 
 + Response 200 (application/json)
 
+    + Body
+            
             {
                 "trash_bin_id": 1,
-                "lat": 0.0,
-                "lng": 0.0
+                "created": "2016-08-17T12:51:56.352Z",
+                "updated": "2016-08-17T12:51:56.352Z",
+                "description": "GEO1",
+                "filling_height": 60,
+                "filling_height_unit": "CENTIMETER",
+                "capacity": 60,
+                "capacity_unit": "LITER",
+                "lng": 7.595934,
+                "lat": 51.969148,
+                "timestamp": "2016-08-17T12:51:56.352Z",
+                "measured_distance": 20,
+                "measured_distance_unit": "CENTIMETER",
+                "measured_filling_height": 40,
+                "measured_filling_height_unit": "CENTIMETER"
             }
+            
+### Edit a Trash Bin [PUT]
+
++ Parameters
+
+    + trash\_bin\_id: `1` (required) - Id of a trash bin
+    
++ Response 200 (application/json)
+
+    + Body
+            
+            {
+                "trash_bin_id": 1,
+                "created": "2016-08-17T12:51:56.352Z",
+                "updated": "2016-08-17T12:51:56.352Z",
+                "description": "GEO1",
+                "filling_height": 60,
+                "filling_height_unit": "CENTIMETER",
+                "capacity": 60,
+                "capacity_unit": "LITER",
+                "lng": 7.595934,
+                "lat": 51.969148,
+                "timestamp": "2016-08-17T12:51:56.352Z",
+                "measured_distance": 20,
+                "measured_distance_unit": "CENTIMETER",
+                "measured_filling_height": 40,
+                "measured_filling_height_unit": "CENTIMETER"
+            }
+
+### Delete a Trash Bin [DELETE]
+
++ Parameters
+
+    + trash\_bin\_id: `1` (required) - Id of a trash bin
+    
++ Response 204
