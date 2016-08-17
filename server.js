@@ -8,6 +8,7 @@ var app = express();
 var httpPort = process.env.PORT || 5000;
 var httpsPort = httpPort + 443;
 var database_url = process.env.DATABASE_URL || 'postgres://Nicho@localhost:5432/giitde';
+exports.database_url = database_url;
 var mode = process.env.MODE || 'simple';
 
 
