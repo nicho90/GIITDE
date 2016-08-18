@@ -29,6 +29,7 @@
     },
     "homepage": "https://github.com/nicho90/GIITDE#readme",
     "dependencies": {
+        "ajv": "^4.5.0",
         "async": "^2.0.1",
         "body-parser": "^1.15.2",
         "colors": "^1.1.2",

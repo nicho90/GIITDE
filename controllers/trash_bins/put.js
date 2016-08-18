@@ -4,87 +4,99 @@ var types = require('pg').types;
 types.setTypeParser(1700, 'text', parseFloat);
 var _ = require('underscore');
 var database_url = require('../../server.js').database_url;
+var Ajv = require('ajv');
+var ajv = new Ajv();
+var validate = ajv.compile(require('../../models/trash_bin'));
 
 
 // PUT
 exports.request = function(req, res) {
 
-    // Connect to database
-    pg.connect(database_url, function(err, client, done) {
-        if (err) {
-            done();
-            console.error(err);
-        } else {
+    // Validate input
+    if (!validate(req.body)) {
 
-            // Prepare query
-            var query = "SELECT * FROM Trash_Bins WHERE trash_bin_id=$1;";
+        console.error(colors.red('Validation error:', validate.errors[0].message));
+        res.status(405).send(validate.errors);
 
-            // Database query
-            client.query(query, [
-                req.params.trash_bin_id
-            ], function(err, result) {
+    } else {
+
+        // Connect to database
+        pg.connect(database_url, function(err, client, done) {
+            if (err) {
                 done();
+                console.error(err);
+            } else {
 
-                if (err) {
-                    res.status(500).send(err);
-                    console.error(colors.red(err));
-                } else {
+                // Prepare query
+                var query = "SELECT * FROM Trash_Bins WHERE trash_bin_id=$1;";
 
-                    // Check if Trash_Bin exists
-                    if (result.rows.length === 0) {
-                        res.status(404).send('Trash bin not found!');
-                        console.error(colors.red('Trash bin not found!'));
+                // Database query
+                client.query(query, [
+                    req.params.trash_bin_id
+                ], function(err, result) {
+                    done();
+
+                    if (err) {
+                        res.status(500).send(err);
+                        console.error(colors.red(err));
                     } else {
 
-                        // Prepare query
-                        var query = "UPDATE Trash_Bins SET " +
-                            "updated = now(), " +
-                            "description=$2, " +
-                            "filling_height=$3, " +
-                            "capacity=$4, " +
-                            "coordinates='POINT(" + req.body.lng + " " + req.body.lat + ")' " +
-                            "WHERE trash_bin_id=$1 " +
-                            "RETURNING " +
-                            "trash_bin_id, " +
-                            "created, " +
-                            "updated, " +
-                            "description, " +
-                            "filling_height, " +
-                            "'CENTIMETER' AS filling_height_unit, " +
-                            "capacity, " +
-                            "'LITER' AS capacity_unit, " +
-                            "ST_X(coordinates::geometry) AS lng, " +
-                            "ST_Y(coordinates::geometry) AS lat;";
+                        // Check if Trash_Bin exists
+                        if (result.rows.length === 0) {
+                            res.status(404).send('Trash bin not found!');
+                            console.error(colors.red('Trash bin not found!'));
+                        } else {
 
-                        // Database query
-                        client.query(query, [
-                            req.params.trash_bin_id,
-                            req.body.description,
-                            req.body.filling_height,
-                            req.body.capacity
-                        ], function(err, result) {
-                            done();
+                            // Prepare query
+                            var query = "UPDATE Trash_Bins SET " +
+                                "updated = now(), " +
+                                "description=$2, " +
+                                "filling_height=$3, " +
+                                "capacity=$4, " +
+                                "coordinates='POINT(" + req.body.lng + " " + req.body.lat + ")' " +
+                                "WHERE trash_bin_id=$1 " +
+                                "RETURNING " +
+                                "trash_bin_id, " +
+                                "created, " +
+                                "updated, " +
+                                "description, " +
+                                "filling_height, " +
+                                "'CENTIMETER' AS filling_height_unit, " +
+                                "capacity, " +
+                                "'LITER' AS capacity_unit, " +
+                                "ST_X(coordinates::geometry) AS lng, " +
+                                "ST_Y(coordinates::geometry) AS lat;";
 
-                            if (err) {
-                                res.status(500).send(err);
-                                console.error(colors.red(err));
-                            } else {
+                            // Database query
+                            client.query(query, [
+                                req.params.trash_bin_id,
+                                req.body.description,
+                                req.body.filling_height,
+                                req.body.capacity
+                            ], function(err, result) {
+                                done();
 
-                                // Check if Trash_Bin exists
-                                if (result.rows.length === 0) {
-                                    res.status(404).send('Trash bin not found!');
-                                    console.error(colors.red('Trash bin not found!'));
+                                if (err) {
+                                    res.status(500).send(err);
+                                    console.error(colors.red(err));
                                 } else {
 
-                                    // Send Result
-                                    res.status(200).send(result.rows[0]);
-                                }
-                            }
-                        });
+                                    // Check if Trash_Bin exists
+                                    if (result.rows.length === 0) {
+                                        res.status(404).send('Trash bin not found!');
+                                        console.error(colors.red('Trash bin not found!'));
+                                    } else {
 
+                                        // Send Result
+                                        res.status(200).send(result.rows[0]);
+                                    }
+                                }
+                            });
+
+                        }
                     }
-                }
-            });
-        }
-    });
+                });
+            }
+        });
+    }
 };
