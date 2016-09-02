@@ -1,3 +1,4 @@
+var program = require('commander');
 var colors = require('colors');
 var express = require('express');
 var bodyParser = require('body-parser');
@@ -11,6 +12,18 @@ var database_url = process.env.DATABASE_URL || 'postgres://Nicho@localhost:5432/
 exports.database_url = database_url;
 var mode = process.env.MODE || 'simple';
 
+program
+    .version('1.0.0')
+    .option('-d, --db_user [username]', 'Enter the PostgreSQL-User, which is needed to start REST-API', 'username')
+    .option('-m, --mode [mode]', 'Define the mode', 'mode')
+    .parse(process.argv);
+
+if (program.db_user !== "username") {
+    database_url = 'postgres://' + program.db_user + '@localhost:5432/giitde';
+}
+if (program.mode !== "mode") {
+    mode = program.mode;
+}
 
 // Setup settings
 app.use(bodyParser.json({
@@ -27,7 +40,7 @@ app.use(express.static(__dirname + '/public'));
 
 // Check for REST-API
 if (mode.toLowerCase() === "api") {
-    console.log(colors.blue(new Date() + "Mode: Webserver & REST-API"));
+    console.log(colors.blue(new Date() + " Mode: Webserver & REST-API"));
 
     // Load dependencies
     var trash_bins = require('./routes/trash_bins');
@@ -38,7 +51,7 @@ if (mode.toLowerCase() === "api") {
     app.use('/api', measurements);
 
 } else {
-    console.log(colors.blue(new Date() + "Mode: Simple webserver"));
+    console.log(colors.blue(new Date() + " Mode: Simple webserver"));
 }
 
 // Start Webserver
