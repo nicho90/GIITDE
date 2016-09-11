@@ -1,7 +1,7 @@
 FORMAT: 1A
 HOST: giv-project7.uni-muenster.de:5000/api
 
-# Smart Trash Bins
+# Smart Trash Bins (NEW)
 
 
 ##### HOST
@@ -25,16 +25,13 @@ HOST: giv-project7.uni-muenster.de:5000/api
 
 ## Trash Bin (object)
 + description: `Eingang des GEO1` (string, required) - Description of the location
-+ filling_height: `60` (number, required) - Filling height `>= 0` of the trash bin, which is the height in Centimeter between the bottom and the ultra sonic sensor.
-+ capacity: `60` (number, required) - Capacity `>= 0` in Liter of the trash bin
++ height: `60` (number, required) - Filling height `>= 0` of the trash bin, which is the height in Centimeter between the bottom and the ultra sonic sensor.
 + lng: `51.969148` (number, required) - Longitude value
 + lat: `7.595934` (number, required) - Latitude value
 
 ## Measurement (object)
-+ measured_distance: `10` (number, required) - Distance `>= 0` in Centimeter, measured from the ultra sonic sensor to the ground, which decreases, when rubbish is inside
-+ measured_filling_height `50` (number, optional) - Distance `>= 0` in Centimeter, automatically calculated by the filling height of the trash bin and the measured distance from the ultra sonic sensor: `filling_height - measured_distance`
-
-
++ measured_height: `10` (number, required) - Distance `>= 0` in Centimeter, measured from the ultra sonic sensor to the ground, which decreases, when rubbish is inside
++ waste_height `50` (number, optional) - Distance `>= 0` in Centimeter, automatically calculated by the filling height of the trash bin and the measured distance from the ultra sonic sensor: `height - measured_height`
 
 
 ## Trash Bin ::Arrays [/trash_bins{?lat,lng,latest_measurement}]
@@ -44,16 +41,13 @@ HOST: giv-project7.uni-muenster.de:5000/api
 
 a) Without the parameters `?lng=51.969037&lat=7.603001`, the following attributes are not contained in the response:
 
-* `distance` 
-* `distance_unit`
+* `user_distance` 
 
 b) Without the parameter `?latest_measurement=true`, the following attributes are not contained in the response:
 
 * `timestamp` 
-* `measured_distance` 
-* `measured_distance_unit` 
-* `measured_filling_height`
-* `measured_filling_height_unit`
+* `measured_height` 
+* `waste_height`
 
 + Parameters
     + lat: `51.969037` (optional) - Latitude value of the User
@@ -68,55 +62,37 @@ b) Without the parameter `?latest_measurement=true`, the following attributes ar
                 "created": "2016-08-17T12:51:56.352Z",
                 "updated": "2016-08-17T12:51:56.352Z",
                 "description": "Bushaltestelle",
-                "filling_height": 60,
-                "filling_height_unit": "CENTIMETER",
-                "capacity": 60,
-                "capacity_unit": "LITER",
+                "height": 60,
                 "lng": 7.59676,
                 "lat": 51.969357,
-                "distance": 430.38893844,
-                "distance_unit": "METER",
+                "user_distance": 430.38893844,
                 "timestamp": "2016-08-17T12:51:56.352Z",
-                "measured_distance": 40,
-                "measured_distance_unit": "CENTIMETER",
-                "measured_filling_height": 20,
-                "measured_filling_height_unit": "CENTIMETER"
+                "measured_height": 40,
+                "waste_height": 20
             }, {
                 "trash_bin_id": 3,
                 "created": "2016-08-17T12:51:56.352Z",
                 "updated": "2016-08-17T12:51:56.352Z",
                 "description": "Correnstraße",
-                "filling_height": 60,
-                "filling_height_unit": "CENTIMETER",
-                "capacity": 60,
-                "capacity_unit": "LITER",
+                "height": 60,
                 "lng": 7.596855,
                 "lat": 51.971076,
-                "distance": 479.45112773,
-                "distance_unit": "METER",
+                "user_distance": 479.45112773,
                 "timestamp": "2016-08-17T12:51:56.352Z",
-                "measured_distance": 60,
-                "measured_distance_unit": "CENTIMETER",
-                "measured_filling_height": 0,
-                "measured_filling_height_unit": "CENTIMETER"
+                "measured_height": 60,
+                "waste_height": 0
             }, {
                 "trash_bin_id": 1,
                 "created": "2016-08-17T12:51:56.352Z",
                 "updated": "2016-08-17T12:51:56.352Z",
                 "description": "GEO1",
-                "filling_height": 60,
-                "filling_height_unit": "CENTIMETER",
-                "capacity": 60,
-                "capacity_unit": "LITER",
+                "height": 60,
                 "lng": 7.595934,
                 "lat": 51.969148,
-                "distance": 485.83873096,
-                "distance_unit": "METER",
+                "user_distance": 485.83873096,
                 "timestamp": "2016-08-17T12:51:56.352Z",
-                "measured_distance": 20,
-                "measured_distance_unit": "CENTIMETER",
-                "measured_filling_height": 40,
-                "measured_filling_height_unit": "CENTIMETER"
+                "measured_height": 20,
+                "waste_height": 40
             }
         ]
 
@@ -126,8 +102,7 @@ b) Without the parameter `?latest_measurement=true`, the following attributes ar
 
         {
             "description": "Eingang Fachhochschule",
-            "filling_height": 60,
-            "capacity": 60,
+            "height": 60,
             "lng": 7.595624,
             "lat": 51.968526
         }
@@ -141,10 +116,7 @@ b) Without the parameter `?latest_measurement=true`, the following attributes ar
                 "created": "2016-08-17T12:51:56.352Z",
                 "updated": "2016-08-17T12:51:56.352Z",
                 "description": "Eingang Fachhochschule",
-                "filling_height": 60,
-                "filling_height_unit": "CENTIMETER",
-                "capacity": 60,
-                "capacity_unit": "LITER",
+                "height": 60,
                 "lng": 7.595624,
                 "lat": 51.968526
             }
@@ -157,10 +129,8 @@ b) Without the parameter `?latest_measurement=true`, the following attributes ar
 Without the parameter `?latest_measurement=true`, the following attributes are not contained in the response: 
 
 * `timestamp` 
-* `measured_distance` 
-* `measured_distance_unit` 
-* `measured_filling_height`
-* `measured_filling_height_unit`
+* `measured_height` 
+* `waste_height`
 
 
 + Parameters
@@ -177,17 +147,12 @@ Without the parameter `?latest_measurement=true`, the following attributes are n
                 "created": "2016-08-17T12:51:56.352Z",
                 "updated": "2016-08-17T12:51:56.352Z",
                 "description": "GEO1",
-                "filling_height": 60,
-                "filling_height_unit": "CENTIMETER",
-                "capacity": 60,
-                "capacity_unit": "LITER",
+                "height": 60,
                 "lng": 7.595934,
                 "lat": 51.969148,
                 "timestamp": "2016-08-17T12:51:56.352Z",
-                "measured_distance": 20,
-                "measured_distance_unit": "CENTIMETER",
-                "measured_filling_height": 40,
-                "measured_filling_height_unit": "CENTIMETER"
+                "measured_height": 20,
+                "waste_height": 40
             }
             
 ### Edit a Trash Bin [PUT]
@@ -209,17 +174,12 @@ Without the parameter `?latest_measurement=true`, the following attributes are n
                 "created": "2016-08-17T12:51:56.352Z",
                 "updated": "2016-08-17T12:51:56.352Z",
                 "description": "GEO1",
-                "filling_height": 60,
-                "filling_height_unit": "CENTIMETER",
-                "capacity": 60,
-                "capacity_unit": "LITER",
+                "height": 60,
                 "lng": 7.595934,
                 "lat": 51.969148,
                 "timestamp": "2016-08-17T12:51:56.352Z",
-                "measured_distance": 20,
-                "measured_distance_unit": "CENTIMETER",
-                "measured_filling_height": 40,
-                "measured_filling_height_unit": "CENTIMETER"
+                "measured_height": 20,
+                "waste_height": 40
             }
 
 ### Delete a Trash Bin [DELETE]
@@ -246,31 +206,23 @@ Without the parameter `?latest_measurement=true`, the following attributes are n
                 {
                     "measurement_id": 4,
                     "timestamp": "2016-08-17T12:51:56.352Z",
-                    "measured_distance": 50,
-                    "measured_distance_unit": "CENTIMETER",
-                    "measured_filling_height": 10,
-                    "measured_filling_height_unit": "CENTIMETER"
+                    "measured_height": 50,
+                    "waste_height": 10
                 }, {
                     "measurement_id": 3,
                     "timestamp": "2016-08-17T12:51:56.352Z",
-                    "measured_distance": 40,
-                    "measured_distance_unit": "CENTIMETER",
-                    "measured_filling_height": 20,
-                    "measured_filling_height_unit": "CENTIMETER"
+                    "measured_height": 40,
+                    "waste_height": 20
                 }, {
                     "measurement_id": 2,
                     "timestamp": "2016-08-17T12:51:56.352Z",
-                    "measured_distance": 30,
-                    "measured_distance_unit": "CENTIMETER",
-                    "measured_filling_height": 50,
-                    "measured_filling_height_unit": "CENTIMETER"
+                    "measured_height": 30,
+                    "waste_height": 50
                 }, {
                     "measurement_id": 1,
                     "timestamp": "2016-08-17T12:51:56.352Z",
-                    "measured_distance": 20,
-                    "measured_distance_unit": "CENTIMETER",
-                    "measured_filling_height": 40,
-                    "measured_filling_height_unit": "CENTIMETER"
+                    "measured_height": 20,
+                    "waste_height": 40
                 }
             ]
 
@@ -292,10 +244,8 @@ Without the parameter `?latest_measurement=true`, the following attributes are n
             {
                 "measurement_id": 5,
                 "timestamp": "2016-08-17T12:51:56.352Z",
-                "measured_distance": 10,
-                "measured_distance_unit": "CENTIMETER",
-                "measured_filling_height": 50,
-                "measured_filling_height_unit": "CENTIMETER"
+                "measured_height": 10,
+                "waste_height": 50
             }
 
 ### Delete all Measurements of a Trash Bin [DELETE]
